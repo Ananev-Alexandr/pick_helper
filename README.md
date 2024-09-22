@@ -11,7 +11,7 @@
 ## Установка
 
 ### Использование
-[Скачать Pick Helper для Windows](https://example.com/path/to/pick_helper.exe)
+[Скачать Pick Helper для Windows](https://github.com/Ananev-Alexandr/pick_helper/raw/refs/heads/main/build/pick_helper.exe)
 
 Запустите скомпилированный файл:
 ~~~
