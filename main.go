@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"time"
 
 	hook "github.com/robotn/gohook"
@@ -13,9 +12,8 @@ var isRunning bool // Глобальная переменная для упра�
 func main() {
 	count := &AtomicCounter{}
 	keyEvents := make(chan hook.Event, 10)
-	startSignal := make(chan struct{}, 1)
 	keyEventStart := "+"
-	keyEventStop := "-"
+	keyEventStop := "="
 
 	// Запускаем регистрацию событий
 	go func() {
@@ -29,12 +27,16 @@ func main() {
 		<-hook.Process(s)
 	}()
 
-	// Ожидаем сигнал старта кликера
-	waitForStart(keyEvents, startSignal)
+	for {
+		startSignal := make(chan struct{})
+		// Ожидаем сигнал старта кликера
+		waitForStart(keyEvents, startSignal)
 
-	// Запускаем кликер с таймером 3 секунды
-	runClickerWithTimeout(count, keyEvents, 3*time.Second)
+		// Запускаем кликер с таймером 3 секунды
+		runClickerWithTimeout(count, keyEvents, 3*time.Second)
 
-	fmt.Printf("Количество кликов: %d\n", count.Get())
-	os.Exit(0)
+		fmt.Printf("Количество кликов: %d\n", count.Get())
+		count.Reset()
+	}
+
 }

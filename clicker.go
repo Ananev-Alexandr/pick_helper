@@ -10,6 +10,11 @@ import (
 	hook "github.com/robotn/gohook"
 )
 
+const (
+	keyEventStart = '+'
+	keyEventStop  = '='
+)
+
 // Функция для выполнения кликов в горутинах
 func runClicker(ctx context.Context, count *AtomicCounter, taskChan chan struct{}) {
 	for {
@@ -50,7 +55,7 @@ func runClickerWithTimeout(count *AtomicCounter, keyEvents chan hook.Event, dura
 		for {
 			select {
 			case e := <-keyEvents:
-				if e.Keychar == '=' && isRunning {
+				if e.Keychar == keyEventStop && isRunning {
 					fmt.Println("Остановлен вручную")
 					cancel()          // Завершаем контекст
 					isRunning = false // Останавливаем кликер
@@ -84,10 +89,10 @@ func waitForStart(keyEvents chan hook.Event, startSignal chan struct{}) {
 	for {
 		select {
 		case e := <-keyEvents:
-			if e.Keychar == '+' && !isRunning {
+			if e.Keychar == keyEventStart && !isRunning {
 				fmt.Println("Получен сигнал старта!")
-				isRunning = true          // Устанавливаем флаг, что кликер запущен
-				startSignal <- struct{}{} // Посылаем сигнал старта
+				isRunning = true   // Устанавливаем флаг, что кликер запущен
+				close(startSignal) // Сигнализируем о старте, после чего канал можно закрыть
 				return
 			}
 		}

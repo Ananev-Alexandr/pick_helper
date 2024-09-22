@@ -15,3 +15,8 @@ func (c *AtomicCounter) Inc() {
 func (c *AtomicCounter) Get() int64 {
 	return atomic.LoadInt64(&c.counter)
 }
+
+// Функция обнуления счетчика
+func (c *AtomicCounter) Reset() {
+	atomic.StoreInt64(&c.counter, 0)
+}
