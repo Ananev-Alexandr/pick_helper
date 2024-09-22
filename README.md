@@ -9,9 +9,9 @@
 - Параллельное выполнение кликов с использованием множества горутин
 
 ## Установка
+[Скачать Pick Helper для Windows](https://github.com/Ananev-Alexandr/pick_helper/raw/refs/heads/main/build/pick_helper.exe)
 
 ### Использование
-[Скачать Pick Helper для Windows](https://github.com/Ananev-Alexandr/pick_helper/raw/refs/heads/main/build/pick_helper.exe)
 
 Запустите скомпилированный файл:
 ~~~
